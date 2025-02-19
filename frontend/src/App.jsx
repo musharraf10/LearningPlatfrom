@@ -60,8 +60,6 @@ const App = () => {
         <Routes>
           <Route path="/landingpage" element={<ErrorBoundary><LandingPage /></ErrorBoundary>} />
           <Route path="/" element={<Home props = {user} />} />
-          {/* <Route path="/settings" element={<Profile props={user} />} /> */}
-          {/* <Route path="/users" element={<Usermanagement />} /> */}
         </Routes>
       </Router>
 

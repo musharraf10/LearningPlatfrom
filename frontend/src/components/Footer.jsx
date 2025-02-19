@@ -83,7 +83,6 @@ const Footer = () => {
             </Typography>
           </Col>
 
-          {/* Social Media Links */}
           <Col md={6} className="text-md-end">
             <div className="social-links">
               <IconButton href="#" aria-label="Facebook" className="text-white">
