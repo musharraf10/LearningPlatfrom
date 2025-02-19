@@ -11,200 +11,206 @@ import Stack from "@mui/joy/Stack";
 import Select from "@mui/joy/Select";
 import Option from "@mui/joy/Option";
 import Typography from "@mui/joy/Typography";
-import Tabs from "@mui/joy/Tabs";
-import TabList from "@mui/joy/TabList";
-import Tab, { tabClasses } from "@mui/joy/Tab";
-import Breadcrumbs from "@mui/joy/Breadcrumbs";
-import Link from "@mui/joy/Link";
 import Card from "@mui/joy/Card";
 import CardActions from "@mui/joy/CardActions";
 import CardOverflow from "@mui/joy/CardOverflow";
-import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
-import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
 import EmailRoundedIcon from "@mui/icons-material/EmailRounded";
 import AccessTimeFilledRoundedIcon from "@mui/icons-material/AccessTimeFilledRounded";
 import EditRoundedIcon from "@mui/icons-material/EditRounded";
+import Breadcrumbs from "@mui/joy/Breadcrumbs"; // Ensure you import these components
+import Link from "@mui/joy/Link";
+import HomeRoundedIcon from "@mui/icons-material/HomeRounded";
+import ChevronRightRoundedIcon from "@mui/icons-material/ChevronRightRounded";
+import Tabs from "@mui/joy/Tabs";
+import Tab from "@mui/joy/Tab";
+import TabList from "@mui/joy/TabList";
+import tabClasses from "@mui/joy/Tab/tabClasses";
 
-// import CountrySelector from './CountrySelector';
+export default function MyProfile({ props }) {
+  const [isEditing, setIsEditing] = React.useState(false);
+  const [profileData, setProfileData] = React.useState({
+    firstName: "John",
+    lastName: "Doe",
+    role: "UI Developer",
+    email: "johndoe@example.com",
+    timezone: "1",
+    image:
+      "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286",
+  });
 
-export default function MyProfile({ props, setSelectedComponent }) {
+  const handleInputChange = (e) => {
+    setProfileData({ ...profileData, [e.target.name]: e.target.value });
+  };
+
+  const handleImageChange = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      setProfileData({
+        ...profileData,
+        image: URL.createObjectURL(e.target.files[0]),
+      });
+    }
+  };
+
+  const handleEdit = () => setIsEditing(true);
+  const handleSave = () => setIsEditing(false);
+
   return (
     <Box sx={{ flex: 1, width: "100%" }}>
-      <Box
-        sx={{
-          position: "sticky",
-          top: { sm: -100, md: -110 },
-          bgcolor: "background.body",
-          zIndex: 9995,
-        }}
-      >
-        <Box sx={{ px: { xs: 2, md: 6 } }}>
-          <Breadcrumbs
-            size="sm"
-            aria-label="breadcrumbs"
-            separator={<ChevronRightRoundedIcon fontSize="sm" />}
-            sx={{ pl: 0 }}
+      {/* Breadcrumbs and Tabs section */}
+      <Box sx={{ px: { xs: 2, md: 6 } }}>
+        <Breadcrumbs
+          size="sm"
+          aria-label="breadcrumbs"
+          separator={<ChevronRightRoundedIcon fontSize="sm" />}
+          sx={{ pl: 0 }}
+        >
+          <Link
+            underline="none"
+            color="neutral"
+            href="/"
+            aria-label="Home"
+            onClick={() => console.log("Navigate to dashboard")}
           >
-            <Link
-              underline="none"
-              color="neutral"
-              href="/"
-              aria-label="Home"
-              onClick={() => setSelectedComponent("dashboard")}
-            >
-              <HomeRoundedIcon />
-            </Link>
-            <Typography color="primary" sx={{ fontWeight: 500, fontSize: 12 }}>
-              Settings
-            </Typography>
-          </Breadcrumbs>
-          <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
-            {props.name} profile
+            <HomeRoundedIcon />
+          </Link>
+          <Typography color="primary" sx={{ fontWeight: 500, fontSize: 12 }}>
+            Settings
           </Typography>
-        </Box>
-        <Tabs defaultValue={0} sx={{ bgcolor: "transparent" }}>
-          <TabList
-            tabFlex={1}
-            size="sm"
-            sx={{
-              pl: { xs: 0, md: 4 },
-              justifyContent: "left",
-              [`&& .${tabClasses.root}`]: {
-                fontWeight: "600",
-                flex: "initial",
-                color: "text.tertiary",
-                [`&.${tabClasses.selected}`]: {
-                  bgcolor: "transparent",
-                  color: "text.primary",
-                  "&::after": {
-                    height: "2px",
-                    bgcolor: "primary.500",
-                  },
+        </Breadcrumbs>
+        <Typography level="h2" component="h1" sx={{ mt: 1, mb: 2 }}>
+          {props.name} profile
+        </Typography>
+      </Box>
+      <Tabs defaultValue={0} sx={{ bgcolor: "transparent" }}>
+        <TabList
+          tabFlex={1}
+          size="sm"
+          sx={{
+            pl: { xs: 0, md: 4 },
+            justifyContent: "left",
+            [`&& .${tabClasses.root}`]: {
+              fontWeight: "600",
+              flex: "initial",
+              color: "text.tertiary",
+              [`&.${tabClasses.selected}`]: {
+                bgcolor: "transparent",
+                color: "text.primary",
+                "&::after": {
+                  height: "2px",
+                  bgcolor: "primary.500",
                 },
               },
-            }}
-          >
-            <Tab sx={{ borderRadius: "6px 6px 0 0" }} indicatorInset value={0}>
-              Settings
-            </Tab>
-            <Tab sx={{ borderRadius: "6px 6px 0 0" }} indicatorInset value={2}>
-              Plan
-            </Tab>
-            <Tab sx={{ borderRadius: "6px 6px 0 0" }} indicatorInset value={3}>
-              Billing
-            </Tab>
-          </TabList>
-        </Tabs>
-      </Box>
+            },
+          }}
+        >
+          <Tab sx={{ borderRadius: "6px 6px 0 0" }} indicatorInset value={0}>
+            Settings
+          </Tab>
+          <Tab sx={{ borderRadius: "6px 6px 0 0" }} indicatorInset value={2}>
+            Plan
+          </Tab>
+          <Tab sx={{ borderRadius: "6px 6px 0 0" }} indicatorInset value={3}>
+            Billing
+          </Tab>
+        </TabList>
+      </Tabs>
+      {/* End of Breadcrumbs and Tabs */}
 
-      <Stack
-        spacing={4}
-        sx={{
-          display: "flex",
-          maxWidth: "800px",
-          mx: "auto",
-          px: { xs: 2, md: 6 },
-          py: { xs: 2, md: 3 },
-        }}
-      >
+      <Box sx={{ flex: 1, width: "100%", maxWidth: "800px", mx: "auto", p: 3 }}>
         <Card>
           <Box sx={{ mb: 1 }}>
             <Typography level="title-md">Personal info</Typography>
             <Typography level="body-sm">
-              Customize how your profile information will appear on the
-              networks.
+              Customize how your profile information will appear.
             </Typography>
           </Box>
           <Divider />
-          <Stack
-            direction="row"
-            spacing={3}
-            sx={{ display: { xs: "none", md: "flex" }, my: 1 }}
-          >
-            <Stack direction="column" spacing={1}>
+          <Stack direction="row" spacing={3} sx={{ my: 2 }}>
+            <Stack direction="column" spacing={1} sx={{ position: "relative" }}>
               <AspectRatio
                 ratio="1"
                 maxHeight={200}
                 sx={{ flex: 1, minWidth: 120, borderRadius: "100%" }}
               >
-                <img
-                  src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=286"
-                  loading="lazy"
-                  alt=""
-                />
+                <img src={profileData.image} alt="Profile" loading="lazy" />
               </AspectRatio>
-              <IconButton
-                aria-label="upload new picture"
-                size="sm"
-                variant="outlined"
-                color="neutral"
-                sx={{
-                  bgcolor: "background.body",
-                  position: "absolute",
-                  zIndex: 2,
-                  borderRadius: "50%",
-                  left: 100,
-                  top: 170,
-                  boxShadow: "sm",
-                }}
-              >
-                <EditRoundedIcon />
-              </IconButton>
+              {isEditing && (
+                <input
+                  type="file"
+                  accept="image/*"
+                  style={{
+                    position: "absolute",
+                    opacity: 0,
+                    width: "100%",
+                    height: "100%",
+                    cursor: "pointer",
+                  }}
+                  onChange={handleImageChange}
+                />
+              )}
             </Stack>
             <Stack spacing={2} sx={{ flexGrow: 1 }}>
               <Stack spacing={1}>
                 <FormLabel>Name</FormLabel>
                 <FormControl
-                  sx={{
-                    display: { sm: "flex-column", md: "flex-row" },
-                    gap: 2,
-                  }}
+                  sx={{ display: "flex", flexDirection: "row", gap: 2 }}
                 >
-                  <Input size="sm" placeholder="First name" />
+                  <Input
+                    size="sm"
+                    placeholder="First name"
+                    name="firstName"
+                    value={profileData.firstName}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
+                  />
                   <Input
                     size="sm"
                     placeholder="Last name"
-                    sx={{ flexGrow: 1 }}
+                    name="lastName"
+                    value={profileData.lastName}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
                   />
                 </FormControl>
               </Stack>
               <Stack direction="row" spacing={2}>
                 <FormControl>
                   <FormLabel>Role</FormLabel>
-                  <Input size="sm" defaultValue="UI Developer" />
+                  <Input
+                    size="sm"
+                    name="role"
+                    value={profileData.role}
+                    disabled
+                  />
                 </FormControl>
                 <FormControl sx={{ flexGrow: 1 }}>
                   <FormLabel>Email</FormLabel>
                   <Input
                     size="sm"
                     type="email"
+                    name="email"
                     startDecorator={<EmailRoundedIcon />}
-                    placeholder="email"
-                    defaultValue="siriwatk@test.com"
+                    value={profileData.email}
+                    onChange={handleInputChange}
+                    disabled={!isEditing}
                   />
                 </FormControl>
               </Stack>
-              <div>{/* <CountrySelector /> */}</div>
               <div>
-                <FormControl sx={{ display: { sm: "contents" } }}>
+                <FormControl>
                   <FormLabel>Timezone</FormLabel>
                   <Select
                     size="sm"
                     startDecorator={<AccessTimeFilledRoundedIcon />}
-                    defaultValue="1"
+                    name="timezone"
+                    value={profileData.timezone}
+                    onChange={(e, newValue) =>
+                      setProfileData({ ...profileData, timezone: newValue })
+                    }
+                    disabled={!isEditing}
                   >
-                    <Option value="1">
-                      Indochina Time (Bangkok)
-                      <Typography textColor="text.tertiary" sx={{ ml: 0.5 }}>
-                        — GMT+07:00
-                      </Typography>
-                    </Option>
-                    <Option value="2">
-                      Indochina Time (Ho Chi Minh City)
-                      <Typography textColor="text.tertiary" sx={{ ml: 0.5 }}>
-                        — GMT+07:00
-                      </Typography>
-                    </Option>
+                    <Option value="1">GMT+07:00 - Indochina Time</Option>
+                    <Option value="2">GMT+05:30 - India Standard Time</Option>
                   </Select>
                 </FormControl>
               </div>
@@ -212,14 +218,33 @@ export default function MyProfile({ props, setSelectedComponent }) {
           </Stack>
           <CardOverflow sx={{ borderTop: "1px solid", borderColor: "divider" }}>
             <CardActions sx={{ alignSelf: "flex-end", pt: 2 }}>
-              <Button size="sm" variant="outlined" color="neutral">
-                Cancel
-              </Button>
-              <Button size="sm">Save</Button>
+              {isEditing ? (
+                <>
+                  <Button
+                    size="sm"
+                    variant="outlined"
+                    color="neutral"
+                    onClick={() => setIsEditing(false)}
+                  >
+                    Cancel
+                  </Button>
+                  <Button size="sm" onClick={handleSave}>
+                    Save
+                  </Button>
+                </>
+              ) : (
+                <Button
+                  size="sm"
+                  onClick={handleEdit}
+                  startDecorator={<EditRoundedIcon />}
+                >
+                  Edit
+                </Button>
+              )}
             </CardActions>
           </CardOverflow>
         </Card>
-      </Stack>
+      </Box>
     </Box>
   );
 }

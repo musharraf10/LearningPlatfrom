@@ -7,7 +7,7 @@ import {
   FaDollarSign,
 } from "react-icons/fa";
 
-const Dashboard = ({ name }) => {
+const Dashboard = ({ props }) => {
   const [stats, setStats] = useState([]);
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const Dashboard = ({ name }) => {
 
   return (
     <div>
-      <h2 className="mb-4 text-dark">Welcome, {name}</h2>
+      <h2 className="mb-4 text-dark">Welcome, {props.name}</h2>
 
       {/* Dashboard Stats */}
       <div className="d-flex gap-3 flex-wrap">

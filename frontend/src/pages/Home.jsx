@@ -4,6 +4,7 @@ import Dashboard from "./Dashboard";
 import UsersManagement from "./UsersManagement"; // Import the UsersManagement Component
 import AppNavbar from "./AppNavbar";
 import Profile from "../components/Profile";
+import ContentModeration from "./ContentModeration";
 
 function Home({ props }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -16,7 +17,6 @@ function Home({ props }) {
         setIsSidebarOpen={setIsSidebarOpen}
       />
       <div className="d-flex">
-        {/* Sidebar */}
         {isSidebarOpen && (
           <Sidebar props={props} setSelectedComponent={setSelectedComponent} />
         )}
@@ -33,7 +33,9 @@ function Home({ props }) {
               props={props}
               setSelectedComponent={setSelectedComponent}
             />
+            
           )}
+          {selectedComponent === "content" && <ContentModeration props={props} />}
         </div>
       </div>
     </div>

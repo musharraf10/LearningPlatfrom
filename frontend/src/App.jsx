@@ -62,11 +62,8 @@ const App = () => {
           <Route path="/" element={<Home props = {user} />} />
         </Routes>
       </Router>
-
-
-    {/* <AuthForm/> */}
     <Footer/>
-
+    <AuthForm/>
     </>
     
   );

@@ -7,9 +7,18 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { motion } from "framer-motion";
 import { makeStyles } from "@mui/styles";
+import AuthForm from "./Register.jsx";
 
 const useStyles = makeStyles({
   appBar: { backgroundColor: "#3f51b5" },
+  modalStyle: {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    backgroundColor: 'white',
+  },
   heroSection: {
     padding: "5rem 2rem",
     backgroundColor: "#f4f4f9",
@@ -57,6 +66,9 @@ const ReadableModal = ({ show, handleClose, article }) => {
     </Modal.Footer>
   </motion.div>
 </Modal>
+
+
+
 
   );
 };
@@ -218,6 +230,10 @@ const LandingPage = () => {
   const classes = useStyles();
   const [modalData, setModalData] = useState(null);
   const [showModal, setShowModal] = useState(false);
+  const [openLoginModal, setOpenLoginModal] = useState(false);
+
+  const handleLoginOpen = () => setOpenLoginModal(true);
+  const handleLoginClose = () => setOpenLoginModal(false);
 
   const openModal = (article) => {
     setModalData(article);
@@ -231,12 +247,25 @@ const LandingPage = () => {
 
   return (
     <div>
-      <AppBar position="static" className={classes.appBar}>
+       <AppBar position="static" className={classes.appBar}>
         <Toolbar>
-          <Typography variant="h6">EduPlatform</Typography>
+          <Typography variant="h6" style={{ flexGrow: 1 }}>
+            EduPlatform
+          </Typography>
+          <Button color="inherit" onClick={handleLoginOpen}>
+            Login
+          </Button>
         </Toolbar>
       </AppBar>
 
+      {/* Modal for Login Form */}
+      <Modal open={openLoginModal} onClose={handleLoginClose}>
+        <Box className={classes.modalStyle}>
+          <Typography variant="h6">Login</Typography>
+          <AuthForm /> {/* Assuming this is your login form */}
+          <Button onClick={handleLoginClose}>Close</Button>
+        </Box>
+      </Modal>
 
       <Box className={classes.heroSection}>
         <Typography variant="h2">{landingPageData.hero.title}</Typography>
@@ -246,7 +275,6 @@ const LandingPage = () => {
 
 
       <Container>
-       {/* Trending Articles Section */}
 
        <Typography variant="h4" align="center" style={{ marginBottom: '2rem', marginTop: '1rem' }}>
         Trending Articles
@@ -255,7 +283,6 @@ const LandingPage = () => {
         {landingPageData.trendingArticles.map((article) => (
           <div key={article.id} style={{ width: '300px', position: 'relative' }}>
             <Card onClick={() => openModal(article)} style={{height:'350px'}}>
-              {/* Badge in the top-right corner */}
               {article.badge && (
                 <Chip
                   label={article.badge}
@@ -268,8 +295,6 @@ const LandingPage = () => {
                   }}
                 />
               )}
-
-              {/* Card Image */}
               <CardMedia
                 component="img"
                 height="150"
@@ -277,7 +302,6 @@ const LandingPage = () => {
                 alt={article.title}
               />
 
-              {/* Card Content */}
               <CardContent>
                 <Typography variant="h6" gutterBottom>
                   {article.title}

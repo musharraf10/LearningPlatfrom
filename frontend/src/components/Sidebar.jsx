@@ -28,7 +28,7 @@ const Sidebar = ({ props, setSelectedComponent }) => {
         >
           <FaUsers /> Users Management
         </Nav.Link>
-        <Nav.Link href="#" className="text-white">
+        <Nav.Link onClick={() => setSelectedComponent("content")} className="text-white">
           <FaMoneyBillWave /> Content Management
         </Nav.Link>
         <Nav.Link href="#" className="text-white">
